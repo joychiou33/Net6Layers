@@ -1,8 +1,10 @@
-﻿namespace ExamLayer.Models
+﻿using ExamLayer.Models.Entity;
+
+namespace ExamLayer.Models.ViewModel
 {
     public class BookVM
     {
-
+        public Guid Id { get; set; }
         public string? Name { get; set; }
 
         public BookType Type { get; set; }

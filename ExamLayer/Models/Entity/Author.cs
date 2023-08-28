@@ -1,4 +1,4 @@
-﻿namespace ExamLayer.Models
+﻿namespace ExamLayer.Models.Entity
 {
     public class Author
     {

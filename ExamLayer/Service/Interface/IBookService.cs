@@ -1,4 +1,4 @@
-﻿using ExamLayer.Models;
+﻿using ExamLayer.Models.Entity;
 
 namespace ExamLayer.Service.Interface
 {

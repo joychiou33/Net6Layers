@@ -1,4 +1,4 @@
-﻿using ExamLayer.Models;
+﻿using ExamLayer.Models.Entity;
 using ExamLayer.Repositories.Interface;
 using ExamLayer.Service.Interface;
 using Microsoft.EntityFrameworkCore;

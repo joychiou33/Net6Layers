@@ -1,5 +1,5 @@
 ﻿using ExamLayer.Data;
-using ExamLayer.Models;
+using ExamLayer.Models.ViewModel;
 using ExamLayer.Repositories.Interface;
 using ExamLayer.Service.Interface;
 using Microsoft.AspNetCore.Mvc;

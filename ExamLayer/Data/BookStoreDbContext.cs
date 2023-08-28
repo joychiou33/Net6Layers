@@ -1,4 +1,4 @@
-﻿using ExamLayer.Models;
+﻿using ExamLayer.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamLayer.Data
