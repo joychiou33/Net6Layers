@@ -1,6 +1,7 @@
 ﻿using ExamLayer.Data;
 using ExamLayer.Models;
 using ExamLayer.Models.DTO;
+using ExamLayer.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

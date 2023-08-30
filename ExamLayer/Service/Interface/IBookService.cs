@@ -1,12 +1,21 @@
-﻿using ExamLayer.Models.Entity;
+﻿using ExamLayer.Filter;
+using ExamLayer.Models.DTO;
+using ExamLayer.Models.Entity;
+using System.Dynamic;
 
 namespace ExamLayer.Service.Interface
 {
     public interface IBookService
     {
-        Task<List<Book>> GetBooks();
-        Task<List<Book>> GetBookById(Guid id);
+        //Task <List<BookDto>> GetAllAsync();
+        Task<(List<BookDto> items, int totalCount)> GetAllAsync(PaginationFilter filter);
 
-        void Create(Book entity);
+        Task<BookDto> GetAsync(Guid id);
+
+        Task<int> CreateAsync(QueryBookDto info);
+
+        bool Update(Guid id, QueryBookDto info);
+
+        bool Delete(Guid id);
     }
 }

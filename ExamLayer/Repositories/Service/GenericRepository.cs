@@ -1,4 +1,5 @@
 ﻿using ExamLayer.Data;
+using ExamLayer.Filter;
 using ExamLayer.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -110,11 +111,18 @@ namespace ExamLayer.Repositories.Service
         //public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression) =>
         //    _dbContext.Set<T>().Where(expression).AsNoTracking();
 
-        public async Task<List<T>> GetAllAsync()
+        public async Task<(List<T> items, int totalCount)> GetAllAsync(PaginationFilter filter)
         {
             try
             {
-                return await _dbContext.Set<T>().ToListAsync();
+                var items = await _dbContext.Set<T>()
+                    .Skip((filter.Page - 1) * (filter.PageSize))
+                    .Take(filter.PageSize)
+                    .ToListAsync();
+
+                var totalCount = await _dbContext.Set<T>().CountAsync();
+
+                return (items, totalCount);
             }
             catch
             {

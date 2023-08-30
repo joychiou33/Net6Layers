@@ -19,6 +19,9 @@ builder.Services.AddDbContext<BookStoreDbContext>(option => option.UseInMemoryDa
 
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IBookService, BookService>();
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

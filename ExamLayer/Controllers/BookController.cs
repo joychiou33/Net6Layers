@@ -1,4 +1,7 @@
 ﻿using ExamLayer.Data;
+using ExamLayer.Filter;
+using ExamLayer.Models;
+using ExamLayer.Models.DTO;
 using ExamLayer.Models.ViewModel;
 using ExamLayer.Repositories.Interface;
 using ExamLayer.Service.Interface;
@@ -20,63 +23,38 @@ namespace ExamLayer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetBooks()
+        public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
         {
-            //Get Data from DB - Domain models
-            var booksDomain = await _bookService.GetBooks();
-            
-            //Map Domain models to DTOs
-            var booksDto = new List<BookVM>();
-            foreach (var bookDomain in booksDomain)
-            {
-                booksDto.Add(new BookVM()
-                {
-                    Name = bookDomain.Name,
-                    Type = bookDomain.Type,
-                    PublishDate = bookDomain.PublishDate,
-                    Price = bookDomain.Price
-                });
-            }
-            //Return DTOs
-            
-            return Ok(booksDto);
+            var result = new PagingSearchOutput<List<BookDto>>();
+            var books = await _bookService.GetAllAsync(filter);
+            result.PageSize = filter.PageSize;
+            result.Page=filter.Page;
+            result.Total = books.totalCount;
+            result.Data = books.items;
+
+            return Ok(result);
         }
+
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetBookById([FromRoute] Guid id)
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            var book = await _bookService.GetBookById(id);
+            var book = await _bookService.GetAsync(id);
             if (book != null)
             {
                 return Ok(book);
             }          
             return NotFound();
         }
-        [HttpPost]
-        public async Task<IActionResult> AddBook(BookVM item)
-        {
-            var book = new Book
-            {
-                Id = Guid.NewGuid(),
-                Name = item.Name,
-                Type = item.Type,
-                PublishDate = item.PublishDate,
-                Price = item.Price
-            };
-            //await _dbContext.Books.AddAsync(book);
-            //await _dbContext.SaveChangesAsync();
-            _bookService.Create(book);
 
-            var bookDto = new BookVM
+        [HttpPost]
+        public async Task<IActionResult> Create(QueryBookDto item)
+        {
+            var iResult = await _bookService.CreateAsync(item);
+            if(iResult > 0) 
             {
-                Name = book.Name,
-                Type = book.Type,
-                PublishDate = book.PublishDate,
-                Price = book.Price
-            };
-            // 201
-            //return CreatedAtAction(nameof(GetBookById), new { id = bookDto.Id }, bookDto);
-            // 200
-            return Ok(bookDto);
+                return Ok();
+            }
+            return BadRequest("Invalid model object");
         }
 
         //[HttpPut]

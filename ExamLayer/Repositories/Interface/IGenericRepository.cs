@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using ExamLayer.Filter;
+using System.Linq.Expressions;
 
 namespace ExamLayer.Repositories.Interface
 {
@@ -12,7 +13,8 @@ namespace ExamLayer.Repositories.Interface
         IQueryable<T> GetAll(Expression<Func<T, bool>> expression, string Include1 = "", string Include2 = "", string Include3 = "", string Include4 = "", string Include5 = "");
         ////IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
 
-        Task<List<T>> GetAllAsync();
+        //Task<List<T>> GetAllAsync();
+        Task<(List<T> items, int totalCount)> GetAllAsync(PaginationFilter filter);
         Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> expression);
 
         #endregion

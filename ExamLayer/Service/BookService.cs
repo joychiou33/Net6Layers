@@ -1,4 +1,8 @@
-﻿using ExamLayer.Models.Entity;
+﻿using AutoMapper;
+using ExamLayer.Filter;
+using ExamLayer.Models;
+using ExamLayer.Models.DTO;
+using ExamLayer.Models.Entity;
 using ExamLayer.Repositories.Interface;
 using ExamLayer.Service.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -7,28 +11,36 @@ namespace ExamLayer.Service
 {
     public class BookService : IBookService
     {
+        private readonly IMapper _mapper;
         private readonly IGenericRepository<Book> _repository;
-        public BookService(IGenericRepository<Book> repository)
+        public BookService(IMapper mapper,IGenericRepository<Book> repository)
         {
+            _mapper = mapper;
             _repository = repository;
         }
 
-        public async Task<List<Book>> GetBooks()
+        public async Task<(List<BookDto> items, int totalCount)> GetAllAsync(PaginationFilter filter)
         {
             try
             {
-                return await _repository.GetAllAsync();
+                var (items, totalCount)  = await _repository.GetAllAsync(filter);
+                   
+                var result = _mapper.Map<List<BookDto>>(items);
+                
+                return (result, totalCount);
             }
             catch
             {
                 throw;
             }
         }
-        public async Task<List<Book>> GetBookById(Guid id)
+        public async Task<BookDto> GetAsync(Guid id)
         {
             try
             {
-                return await _repository.FindByCondition(x => x.Id == id).ToListAsync();
+                var data = await _repository.GetAsync(x => x.Id == id);
+                var result = _mapper.Map<BookDto>(data);
+                return result;
             }
             catch
             {
@@ -36,16 +48,27 @@ namespace ExamLayer.Service
             }
         }
 
-        public void Create(Book entity)
+        public async Task<int> CreateAsync(QueryBookDto info)
         {
             try
             {
-               _repository.Create(entity);
+                var result = _mapper.Map<Book>(info);
+                return  await _repository.CreateAsync(result);
             }
             catch
             {
                 throw;
             }
+        }
+
+        public bool Update(Guid id, QueryBookDto info)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
