@@ -25,14 +25,10 @@ namespace ExamLayer.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
         {
-            var result = new PagingSearchOutput<List<BookDto>>();
+            //var result = new PagingSearchOutput<List<BookDto>>();
             var books = await _bookService.GetAllAsync(filter);
-            result.PageSize = filter.PageSize;
-            result.Page=filter.Page;
-            result.Total = books.totalCount;
-            result.Data = books.items;
-
-            return Ok(result);
+            
+            return Ok(books);
         }
 
         [HttpGet("{id:guid}")]

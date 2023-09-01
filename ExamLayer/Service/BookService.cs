@@ -18,16 +18,15 @@ namespace ExamLayer.Service
             _mapper = mapper;
             _repository = repository;
         }
-
-        public async Task<(List<BookDto> items, int totalCount)> GetAllAsync(PaginationFilter filter)
+      
+        public async Task<PageList<BookDto>> GetAllAsync(PaginationFilter filter)
         {
             try
             {
-                var (items, totalCount)  = await _repository.GetAllAsync(filter);
-                   
-                var result = _mapper.Map<List<BookDto>>(items);
-                
-                return (result, totalCount);
+                var data  = await _repository.GetAllAsync();
+                var data_dto = _mapper.Map<List<BookDto>>(data).AsQueryable();
+                var data_paged = new PageList<BookDto>(data_dto, filter.Page,filter.PageSize);
+                return (data_paged);
             }
             catch
             {

@@ -8,7 +8,7 @@ namespace ExamLayer.Service.Interface
     public interface IBookService
     {
         //Task <List<BookDto>> GetAllAsync();
-        Task<(List<BookDto> items, int totalCount)> GetAllAsync(PaginationFilter filter);
+        Task<PageList<BookDto>> GetAllAsync(PaginationFilter filter);
 
         Task<BookDto> GetAsync(Guid id);
 

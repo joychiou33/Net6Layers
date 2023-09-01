@@ -111,6 +111,17 @@ namespace ExamLayer.Repositories.Service
         //public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression) =>
         //    _dbContext.Set<T>().Where(expression).AsNoTracking();
 
+        public async Task<IQueryable<T>> GetAllAsync()
+        {
+            try
+            {
+                return await Task.Run(() => this._dbContext.Set<T>().AsQueryable());
+            }
+            catch
+            {
+                throw;
+            } 
+        }
         public async Task<(List<T> items, int totalCount)> GetAllAsync(PaginationFilter filter)
         {
             try
@@ -264,6 +275,8 @@ namespace ExamLayer.Repositories.Service
             return rtnNumber;
 
         }
+
+        
 
         #endregion
 

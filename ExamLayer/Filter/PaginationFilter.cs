@@ -6,7 +6,7 @@
         /// <summary>
         /// 顯示筆數
         /// </summary>
-        public int PageSize { get; set; } = 100;
+        public int PageSize { get; set; } = 10;
         /// <summary>
         /// 排序條件
         /// </summary>

@@ -6,6 +6,8 @@ namespace ExamLayer.Repositories.Interface
     public interface IGenericRepository<T> where T : class
     {
 
+
+
         #region 查詢
         T Get(Expression<Func<T, bool>> expression, string Include1 = "", string Include2 = "", string Include3 = "", string Include4 = "", string Include5 = "");
         Task<T> GetAsync(Expression<Func<T, bool>> expression);
@@ -13,7 +15,7 @@ namespace ExamLayer.Repositories.Interface
         IQueryable<T> GetAll(Expression<Func<T, bool>> expression, string Include1 = "", string Include2 = "", string Include3 = "", string Include4 = "", string Include5 = "");
         ////IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
 
-        //Task<List<T>> GetAllAsync();
+        Task<IQueryable<T>> GetAllAsync();
         Task<(List<T> items, int totalCount)> GetAllAsync(PaginationFilter filter);
         Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> expression);
 
