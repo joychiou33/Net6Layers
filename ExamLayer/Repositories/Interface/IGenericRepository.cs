@@ -1,4 +1,4 @@
-﻿using ExamLayer.Filter;
+﻿
 using System.Linq.Expressions;
 
 namespace ExamLayer.Repositories.Interface
@@ -16,7 +16,6 @@ namespace ExamLayer.Repositories.Interface
         ////IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
 
         Task<IQueryable<T>> GetAllAsync();
-        Task<(List<T> items, int totalCount)> GetAllAsync(PaginationFilter filter);
         Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> expression);
 
         #endregion

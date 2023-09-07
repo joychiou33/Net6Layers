@@ -1,8 +1,9 @@
 ﻿using ExamLayer.Data;
-using ExamLayer.Filter;
+using ExamLayer.Enums;
+using ExamLayer.Exceptions;
 using ExamLayer.Models;
 using ExamLayer.Models.DTO;
-using ExamLayer.Models.ViewModel;
+using ExamLayer.Models.Entity;
 using ExamLayer.Repositories.Interface;
 using ExamLayer.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ namespace ExamLayer.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class BookController : Controller
+    public class BookController : BaseController
     {
         //private readonly IBookRepository _bookRepository;
         private readonly IBookService _bookService;
@@ -23,52 +24,70 @@ namespace ExamLayer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
+        public async Task<IActionResult> GetAll([FromQuery] BookGetAllInput input)
         {
-            //var result = new PagingSearchOutput<List<BookDto>>();
-            var books = await _bookService.GetAllAsync(filter);
+            var result = new BaseOutput<PagingSearchOutput<BookDto>>();
+            result.StatusCode = ApiEnum.ErrorCode.GetSuccess;
+
+            var data_paged = await _bookService.GetAllAsync(input);
+            if (data_paged.TotalCount > 0)
+            {
+                result.Data = data_paged;
+            }
             
-            return Ok(books);
+            return Ok(result);
         }
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            var book = await _bookService.GetAsync(id);
-            if (book != null)
+            var result = new BaseOutput<BookDto>();
+            result.StatusCode = ApiEnum.ErrorCode.GetSuccess;
+            
+            var data_dto = await _bookService.GetAsync(id);
+            if (data_dto == null)
             {
-                return Ok(book);
+                result.StatusCode = ApiEnum.ErrorCode.DataNotFound;
             }          
-            return NotFound();
+            else
+            {
+                result.Data = data_dto;
+            }
+            return Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(QueryBookDto item)
+        public async Task<IActionResult> Create([FromBody] BookInput input)
         {
-            var iResult = await _bookService.CreateAsync(item);
-            if(iResult > 0) 
+            var result = new BaseOutput<string>();
+            result.StatusCode = ApiEnum.ErrorCode.CreateSuccess;
+            
+            var data_dto = await _bookService.CreateAsync(input);
+
+            if(data_dto < 1) 
             {
-                return Ok();
+                result.StatusCode = ApiEnum.ErrorCode.DataExist;
             }
-            return BadRequest("Invalid model object");
+            return Ok(result);
         }
 
         //[HttpPut]
         //[Route("{id:guid}")]
-        //public async Task<IActionResult> UpdateBook([FromRoute] Guid id, BookVM item)
+        //public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] BookInput input)
         //{
-        //    var book = await _dbContext.Books.FindAsync(id);
-        //    if(book != null)
-        //    {
-        //        book.Name = item.Name;
-        //        book.Type = item.Type;
-        //        book.PublishDate = item.PublishDate;
-        //        book.Price = item.Price;
+            
+        //    var result = new BaseOutput<string>();
 
-        //        await _dbContext.SaveChangesAsync();
-        //        return Ok(book);
-        //    }
-        //    return NotFound(); 
+        //    if (!input.Any())
+        //        result.StatusCode = ApiEnum.ErrorCode.InvalidParam;
+
+        //    var data_dto = _bookService.UpdateAsync(id, input);
+        //    result.StatusCode = ApiEnum.ErrorCode.UpdateSuccess;
+
+        //    if (data_dto < 1)
+        //        result.StatusCode = ApiEnum.ErrorCode.DataNotFound;
+
+        //    return Ok(result);
         //}
 
         //[HttpDelete]

@@ -1,10 +1,9 @@
 ﻿using ExamLayer.Models.Entity;
-
-namespace ExamLayer.Models.ViewModel
+using static ExamLayer.Enums.ApiEnum;
+namespace ExamLayer.Models.DTO
 {
-    public class BookVM
+    public class BookInput
     {
-        public Guid Id { get; set; }
         public string? Name { get; set; }
 
         public BookType Type { get; set; }

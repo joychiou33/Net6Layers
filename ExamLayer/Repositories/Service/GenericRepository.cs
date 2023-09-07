@@ -1,7 +1,7 @@
 ﻿using ExamLayer.Data;
-using ExamLayer.Filter;
 using ExamLayer.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Linq.Expressions;
 using System.Transactions;
@@ -122,24 +122,6 @@ namespace ExamLayer.Repositories.Service
                 throw;
             } 
         }
-        public async Task<(List<T> items, int totalCount)> GetAllAsync(PaginationFilter filter)
-        {
-            try
-            {
-                var items = await _dbContext.Set<T>()
-                    .Skip((filter.Page - 1) * (filter.PageSize))
-                    .Take(filter.PageSize)
-                    .ToListAsync();
-
-                var totalCount = await _dbContext.Set<T>().CountAsync();
-
-                return (items, totalCount);
-            }
-            catch
-            {
-                throw;
-            }
-        }
 
         public async Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> expression)
         {
@@ -212,10 +194,7 @@ namespace ExamLayer.Repositories.Service
 
             return rtnNumber;
         }
-        public async Task<int> SaveChangesAsync()
-        {
-            return await _dbContext.SaveChangesAsync();
-        }
+        
         #endregion
 
         #region 修改
@@ -276,9 +255,14 @@ namespace ExamLayer.Repositories.Service
 
         }
 
-        
+
 
         #endregion
 
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _dbContext.SaveChangesAsync();
+        }
+        
     }
 }

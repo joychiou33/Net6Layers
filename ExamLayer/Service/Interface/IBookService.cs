@@ -1,4 +1,4 @@
-﻿using ExamLayer.Filter;
+﻿using ExamLayer.Models;
 using ExamLayer.Models.DTO;
 using ExamLayer.Models.Entity;
 using System.Dynamic;
@@ -7,15 +7,15 @@ namespace ExamLayer.Service.Interface
 {
     public interface IBookService
     {
-        //Task <List<BookDto>> GetAllAsync();
-        Task<PageList<BookDto>> GetAllAsync(PaginationFilter filter);
+        //Task <IQueryable<BookDto>> GetAllAsync();
+        Task<PagingSearchOutput<BookDto>> GetAllAsync(BookGetAllInput input);
 
         Task<BookDto> GetAsync(Guid id);
 
-        Task<int> CreateAsync(QueryBookDto info);
+        Task<int> CreateAsync(BookInput input);
 
-        bool Update(Guid id, QueryBookDto info);
+        //Task<int> UpdateAsync(Guid id, BookInput input);
 
-        bool Delete(Guid id);
+        //bool Delete(Guid id);
     }
 }

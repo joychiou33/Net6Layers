@@ -1,4 +1,6 @@
-﻿namespace ExamLayer.Models.Entity
+﻿using static ExamLayer.Enums.ApiEnum;
+
+namespace ExamLayer.Models.Entity
 {
     public class Book
     {
@@ -12,17 +14,6 @@
         public DateTime PublishDate { get; set; }
         public DateTime CreateDate { get; set; }
     }
-    public enum BookType
-    {
-        Undefined,
-        Adventure,
-        Biography,
-        Dystopia,
-        Fantastic,
-        Horror,
-        Science,
-        ScienceFiction,
-        Poetry
-    }
+    
 
 }

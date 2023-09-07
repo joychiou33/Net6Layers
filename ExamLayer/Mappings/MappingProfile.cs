@@ -9,7 +9,7 @@ namespace ExamLayer.Mappings
     {
         public MappingProfile() {
             CreateMap<Book, BookDto>().ReverseMap(); 
-            CreateMap<QueryBookDto, Book>().ReverseMap(); ;
+            CreateMap<BookInput, Book>().ReverseMap(); ;
 
         }    
     }

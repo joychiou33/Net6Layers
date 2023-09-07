@@ -5,34 +5,33 @@ namespace ExamLayer.Models
 {
     public class BaseOutput<T>
     {
-        private ApiEnum.ErrorCode _errorCode;
+        private ApiEnum.ErrorCode _statusCode;
         public BaseOutput()
         {
-            _errorCode = 0;
+            _statusCode = 0;
         }
 
-        public ApiEnum.ErrorCode ErrorCode
+        public ApiEnum.ErrorCode StatusCode
         {
             get
             {
-                return _errorCode;
+                return _statusCode;
             }
             set
             {
-                _errorCode = value;
+                _statusCode = value;
             }
         }
 
-        public string ErrorMessage
+        public string StatusMessage
         {
             get
             {
-                return _errorCode == 0 ? "Success" : _errorCode.GetDescription();
+                return (_statusCode == 0) ? "Success" : _statusCode.GetDescription();
             }
         }
 
         public T? Data { get; set; }
-        public int Total { get; set; }
     }
 
 
