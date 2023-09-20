@@ -10,9 +10,9 @@ namespace ExamLayer.Repositories.Service
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly BookStoreDbContext _dbContext;
+        private readonly MarketPlaceDbContext _dbContext;
 
-        public GenericRepository(BookStoreDbContext dbContext)
+        public GenericRepository(MarketPlaceDbContext dbContext)
         {
             _dbContext = dbContext;
         }

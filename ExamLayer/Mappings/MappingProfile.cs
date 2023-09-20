@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using ExamLayer.Models.DTO;
 using ExamLayer.Models.Entity;
-using ExamLayer.Models.ViewModel;
 
 namespace ExamLayer.Mappings
 {

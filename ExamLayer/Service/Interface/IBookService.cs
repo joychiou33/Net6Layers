@@ -1,7 +1,6 @@
 ﻿using ExamLayer.Models;
 using ExamLayer.Models.DTO;
-using ExamLayer.Models.Entity;
-using System.Dynamic;
+
 
 namespace ExamLayer.Service.Interface
 {

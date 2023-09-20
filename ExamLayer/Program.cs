@@ -14,11 +14,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<BookStoreDbContext>(option => option.UseInMemoryDatabase("BookStoreDB"));
-//builder.Services.AddDbContext<BookStoreDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("BookStoreConn")));
+//builder.Services.AddDbContext<BookStoreDbContext>(option => option.UseInMemoryDatabase("BookStoreDB"));
+builder.Services.AddDbContext<MarketPlaceDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("MPConn")));
 
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IIndexBusinessMetaService, IndexBusinessMetaService>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 

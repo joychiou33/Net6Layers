@@ -1,14 +1,8 @@
-﻿using ExamLayer.Data;
-using ExamLayer.Enums;
-using ExamLayer.Exceptions;
+﻿using ExamLayer.Enums;
 using ExamLayer.Models;
 using ExamLayer.Models.DTO;
-using ExamLayer.Models.Entity;
-using ExamLayer.Repositories.Interface;
 using ExamLayer.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace ExamLayer.Controllers
 {
@@ -56,20 +50,20 @@ namespace ExamLayer.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] BookInput input)
-        {
-            var result = new BaseOutput<string>();
-            result.StatusCode = ApiEnum.ErrorCode.CreateSuccess;
+        //[HttpPost]
+        //public async Task<IActionResult> Create([FromBody] BookInput input)
+        //{
+        //    var result = new BaseOutput<string>();
+        //    result.StatusCode = ApiEnum.ErrorCode.CreateSuccess;
             
-            var data_dto = await _bookService.CreateAsync(input);
+        //    var data_dto = await _bookService.CreateAsync(input);
 
-            if(data_dto < 1) 
-            {
-                result.StatusCode = ApiEnum.ErrorCode.DataExist;
-            }
-            return Ok(result);
-        }
+        //    if(data_dto < 1) 
+        //    {
+        //        result.StatusCode = ApiEnum.ErrorCode.DataExist;
+        //    }
+        //    return Ok(result);
+        //}
 
         //[HttpPut]
         //[Route("{id:guid}")]
