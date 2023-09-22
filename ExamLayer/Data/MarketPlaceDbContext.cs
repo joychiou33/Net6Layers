@@ -9,7 +9,7 @@ namespace ExamLayer.Data
         {
         }
 
-        public DbSet<Book> Books { get; set; }
+        public DbSet<AZDPS_APIM_INDEX_LIST> AZDPS_APIM_INDEX_LISTs { get; set; }
         public DbSet<AZDPS_APIM_INDEX_LIST> IndexBusinessMeta { get; set; }
     }
 }

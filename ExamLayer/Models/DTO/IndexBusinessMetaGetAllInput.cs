@@ -4,6 +4,9 @@ namespace ExamLayer.Models.DTO
 {
     public class IndexBusinessMetaGetAllInput : PagingSearchInput
     {
+        [FromQuery(Name = "IndexCode")]
+        public int? IndexCode { get; set; }
+
         [FromQuery(Name = "IndexName")]
         public string? IndexName { get; set; }
         
@@ -23,7 +26,7 @@ namespace ExamLayer.Models.DTO
         public string? DataSourceID { get; set; }
 
         [FromQuery(Name = "Sensitivity")]
-        public char Sensitivity { get; set; }
+        public string? Sensitivity { get; set; }
 
         [FromQuery(Name = "MainCategoryName")]
         public string? MainCategoryName { get; set; }

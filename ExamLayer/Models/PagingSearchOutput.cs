@@ -7,7 +7,7 @@
         public int TotalPage =>
             (int)Math.Ceiling(this.TotalCount / (double)this.PageSize);
         
-        public PagingSearchOutput(IQueryable<T> source, int page, int pageSize)
+        public PagingSearchOutput(List<T> source, int page, int pageSize)
         {
             this.TotalCount = source.Count();
             this.Page = page;
